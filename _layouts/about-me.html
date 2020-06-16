@@ -6,12 +6,14 @@ layout: default
   <div class="col-lg-4 offset-md-1">
     <div class="card" id="profile-card">
       <a href="/">
-        <img src="{{site.url}}{{site.baseurl}}/assets/img/{{ site.author_logo }}" class="profile-img" />
+        <img src="{{site.url}}{{site.baseurl}}/assets/img/{{ site.author_pic }}" class="profile-img" style="width:150px;height:177px;"/>
       </a>
-      <h1 class="profile-name">{{ site.title }}</h1>
+      <!-- <h1 class="profile-name">{{ site.title }}</h1> -->
       <p class="profile-bio">{{ site.subtitle }}</p>
+      {% comment %}
       {% if site.github_username %} {%- include github_follow_button.html -%} {%
       endif %}
+      {% endcomment %}
 
       <p class="profile-links">
         {% if site.twitter_username %}
@@ -124,6 +126,7 @@ layout: default
           <img
             src="{{site.url}}{{site.baseurl}}/assets/img/{{project.project_thumbnail}}"
             class="project-img"
+            style="width:300px;height:214px;"
           />
         </div>
         <div class="col-md-4 center">

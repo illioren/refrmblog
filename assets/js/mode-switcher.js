@@ -1,4 +1,5 @@
 let systemInitiatedDark = window.matchMedia("(prefers-color-scheme: dark)");
+//let theme = "light";
 let theme = sessionStorage.getItem('theme');
 
 function prefersColorTest(systemInitiatedDark) {

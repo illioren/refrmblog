@@ -3,8 +3,8 @@ subtitle: A peek into my projects.
 description: >- # this means to ignore newlines until "baseurl:"
   Details and stories about my tech journey
 
-url: "" # the base hostname & protocol for your site, e.g. https://example.github.io
-baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://illioren.github.io" # the base hostname & protocol for your site, e.g. https://example.github.io
+baseurl: "/refrmblog" # the subpath of your site, e.g. /blog
 
 urls:
     - text: About Me

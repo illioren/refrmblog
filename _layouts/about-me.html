@@ -124,7 +124,7 @@ layout: default
       <div class="row" id="project-card">
         <div class="col-md-6">
           <img
-            src="{{site.url}}{{site.baseurl}}/assets/img/{{project.project_thumbnail}}"
+            src="{{site.url}}{{site.baseurl}}/assets/img/projects/{{ project.project_title }}/{{project.project_thumbnail}}"
             class="project-img"
             style="width:300px;height:214px;"
           />
@@ -134,7 +134,7 @@ layout: default
           <h6 class="experience-info">{{ project.project_info}}</h6>
           <p class="experience-desc">{{ project.project_description }}</p>
           <p>
-            <a class="project-link" href="{{project.project_url}}"
+            <a class="project-link" href="{{site.url}}{{site.baseurl}}/assets/img/{{project.project_url}}"
               >{{ project.project_url}}</a
             >
           </p>

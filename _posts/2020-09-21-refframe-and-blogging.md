@@ -25,7 +25,7 @@ Completing this process by hand is long, tedious and its outcome often incomplet
 
 The traditional way of doing document search relies on lexical indexations and computing a document match score against the search query. While this approach works well for non-specialised material where nuances and specific contexts are often of little concern, it seems to fail to deliver satisfying answers in the context of scientific publications. 
 
-To all this, I would add the fact that for some reasons, we choose to store a wide portion of mankind's knowledge in a non easily minable data format: PDF documents (I will come back to those in the near enough...)
+To all this, I would add the fact that for some reasons, we choose to store a wide portion of mankind's knowledge in a non easily minable data format: PDF documents (I will come back to those in the near future...)
 
 ##### And so?
 So I thought that I could put something together, make my life easier, and ideally open it to more people along the way. I had experience with programming and I liked solving problems, so why not give it a good wack and knock this one out of the way.

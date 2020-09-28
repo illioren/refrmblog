@@ -8,12 +8,12 @@ category:
 - journey
 summary: An overview of what I am building, in pictures and words.
 thumbnail: "/assets/img/posts/what-is-refframe/thumbnail.png"
-hero: "/assets/img/posts/what-is-refframe/hero.png"
+hero: "/assets/img/posts/what-is-refframe/post_hero.png"
 ---
 
 ### I am building a search engine
 
-As I have explained in my [First post](./2020-09-21-refframe-and-blogging.md) Refframe is a platform dedicated to the search of academic documents. However, I was eager to offer a different set of tools compared to other search engines **❶**. Not because traditional tools do not work, but because they are not ill adapted: keyword-based search - coupled with page ranking - is sufficient for most common topics, but when it comes to research, some concepts can be specialised enough to require a full sentence (or more) to accurately characterise.
+As I have explained in my [First post](https://illioren.github.io/refrmblog/refframe/journey/2020/09/21/refframe-and-blogging/) Refframe is a platform dedicated to the search of academic documents. However, I was eager to offer a different set of tools compared to other search engines **❶**. Not because traditional tools do not work, but because they are not ill adapted: keyword-based search - coupled with page ranking - is sufficient for most common topics, but when it comes to research, some concepts can be specialised enough to require a full sentence (or more) to accurately characterise.
 
 Fortunately, we already invented the symbols that encode those thoughts: *peer-reviewed publications*.
 
@@ -30,7 +30,7 @@ This aspect is often left aside and defaults to displaying a paginated list that
 But to better grasp the results provided, I wanted to stay away from a tradition list display (although, a list display will also exist, for familiarity's sake).
 Graph visualisation enables to seize at a glance the relationship between multiple articles; being similarities, topics and sub subtopics, and other interesting resources.
 
-![imgs](/assets/img/posts/what-is-refframe/unfiltered_graph.png)
+![imgs](/refrmblog/assets/img/posts/what-is-refframe/unfiltered_graph.png)
 
 ### I am building an exploration engine
 
@@ -40,4 +40,4 @@ In the context of looking for "relevant" documents, though, it is another story 
 
 I have in mind that while the supposed results should be clearly presented on a dedicated page, they also should be interactive and enable a certain level of interaction - and exploration.
 
-![imgs](/assets/img/posts/what-is-refframe/filtered_graph.png)
+![imgs](/refrmblog/assets/img/posts/what-is-refframe/filtered_graph.png)

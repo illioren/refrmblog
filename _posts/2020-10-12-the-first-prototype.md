@@ -1,5 +1,5 @@
 ---
-title: Your first prototype
+title: The first prototype
 layout: post
 author: Tim
 date: '2020-10-12 07:00:00'

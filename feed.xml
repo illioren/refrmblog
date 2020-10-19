@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://illioren.github.io/refrmblog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://illioren.github.io/refrmblog/" rel="alternate" type="text/html" /><updated>2020-10-19T06:14:51+00:00</updated><id>https://illioren.github.io/refrmblog/feed.xml</id><title type="html">Tim’s blog</title><subtitle>Details and stories about my tech journey</subtitle><author><name>Tim</name></author><entry><title type="html">The first prototype</title><link href="https://illioren.github.io/refrmblog/refframe/journey/first%20prototype/2020/10/12/the-first-prototype/" rel="alternate" type="text/html" title="The first prototype" /><published>2020-10-12T07:00:00+00:00</published><updated>2020-10-12T07:00:00+00:00</updated><id>https://illioren.github.io/refrmblog/refframe/journey/first%20prototype/2020/10/12/the-first-prototype</id><content type="html" xml:base="https://illioren.github.io/refrmblog/refframe/journey/first%20prototype/2020/10/12/the-first-prototype/">&lt;h1 id=&quot;the-first-prototype-implementation&quot;&gt;“The first prototype: implementation”&lt;/h1&gt;
+
+&lt;p&gt;In a &lt;a href=&quot;https://illioren.github.io/refrmblog/refframe/journey/first%20prototype/2020/10/05/your-first-prototype/&quot;&gt;previous post&lt;/a&gt;, I talked about the definition of a First Prototype and the divergence of understanding that can arise from it. By one of those definitions, I had my prototype ready in some 3.5 months.&lt;/p&gt;
+
+&lt;p&gt;The first version of Refframe was a monolithic application written in Python. In fact, it was not even “an” application, but rather a collection of scripts calling one another:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A script to generate single references from .bib and .bst files and tag the individual parts as being “authors”, “title”, and “journal” to generate training samples.&lt;/li&gt;
+  &lt;li&gt;A script to generate and train an artificial neural network to recognise the different part of a given reference using the training samples generated above&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;A script to open and extract information from a PDF.&lt;/p&gt;
+
+    &lt;p&gt;This script was where the “heavy” lifting was happening. It was effectively opening all the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.pdf&lt;/code&gt; files contained within a folder❶ and:
+    1. Scanned the first few pages of the file to find the title.
+    2. Found out how many columns were present within the document.
+    3. Scanned the document backward from the end to find the start reference section.
+    4. Extracted the references and attempted to rebuild them if they were spanning over multiple lines before storing them in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.json&lt;/code&gt; files.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;A script to parse and tag the references using the trained artificial neural network.&lt;/li&gt;
+  &lt;li&gt;A script to plot a co-citation graph from the JSON files produces.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;❶ If the PDF did not contain any text, an OCR engine (&lt;a href=&quot;https://github.com/tesseract-ocr/tesseract&quot;&gt;Tesseract&lt;/a&gt;) was kicking in to further attempt a data extraction.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;All this code was essentially acting as a single monolithic program (single process, single thread - except for the reference parsing that was calling on a C based neural network library); the performance of which was then very low, both in term of extraction success rate and was, and as you can guess, of speed. It would often need more than a minute to finalise the data extraction process of a single document.&lt;/p&gt;
+
+&lt;p&gt;Nevertheless, it was “working” and proving my point. With that said, even without considering the numerous stability issues, it was pretty much unusable due to the lack of controls on one hand (all steps were hard codded operations) and the lack of interactivity on the other hand: the result visualisation was stored in a barely readable PDF document and had little value.&lt;/p&gt;
+
+&lt;p&gt;Later, I took the time to address this point an added a graphical interface. But this is a topic for a later post.&lt;/p&gt;</content><author><name>Tim</name></author><category term="[&quot;refframe&quot;, &quot;journey&quot;, &quot;first prototype&quot;]" /><summary type="html">“The first prototype: implementation”</summary></entry><entry><title type="html">Your first prototype</title><link href="https://illioren.github.io/refrmblog/refframe/journey/first%20prototype/2020/10/05/your-first-prototype/" rel="alternate" type="text/html" title="Your first prototype" /><published>2020-10-05T07:00:00+00:00</published><updated>2020-10-05T07:00:00+00:00</updated><id>https://illioren.github.io/refrmblog/refframe/journey/first%20prototype/2020/10/05/your-first-prototype</id><content type="html" xml:base="https://illioren.github.io/refrmblog/refframe/journey/first%20prototype/2020/10/05/your-first-prototype/">&lt;h1 id=&quot;your-first-prototype&quot;&gt;Your first prototype&lt;/h1&gt;
+
+&lt;p&gt;Today, I would like to talk about the notion of “First Prototype” and why I struggled with it.&lt;/p&gt;
+
+&lt;p&gt;When taking on this project, I set up to show what I was doing was, firstly, possible, and, secondly, a good idea. Not only to myself but also to my PhD supervisor and, at the time, partner.&lt;/p&gt;
+
+&lt;p&gt;This was also the time when I finally thought “it might be a good idea to learn how starting a business is done”. Never too late to start asking the obvious, right? I was often been told that “all you need is a prototype”, that “it should be fast, just slam it together” and that “it does not really need to work”.&lt;/p&gt;
+
+&lt;p&gt;At the time of this writing, I have been working on this project for almost 6 years and, thankfully, I did not take me this long to produce a “prototype”. The very first version was completed in less than 3 months of (very) part-time ML prototyping followed by 2 weeks of solid coding over the 2015 Christmas break.&lt;/p&gt;
+
+&lt;h2 id=&quot;just-put-it-online&quot;&gt;“Just put it online!”&lt;/h2&gt;
+
+&lt;p&gt;So why did I not use this prototype? Well, I did not know how to be perfectly honest. Showing it to people is one thing, but I -rightfully so- doubted my ability to deliver something usable within the next 6 months to leverage their interest (following the advice that “you need to move fast, fast, fast…” - but this is another topic).&lt;/p&gt;
+
+&lt;p&gt;When asking around, I was mostly told: “You have a prototype? You just need to put it online”. While this is legitimate advice -I, indeed need to find an audience and make it known that I am doing something- there is more to this action than most people seem to believe. If you ask me, this advice is partly driven by a lack of insight around two key aspects:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;ins&gt;Technical ignorance&lt;/ins&gt;: of course, not all people are tech-savvy, and there is a multitude of ways to put something online. For a forum-like application written in PHP -for instance- a lot of “ready-to-fire” solutions exist out there that would enable you to do that in less than 5mn. For a custom software that tries to walk outside the mainstream path, this can become involved very quickly. In my case, “Just put it online”, would have been a costly months-long endeavour which result would probably need to eventually be entirety re-worked.&lt;/li&gt;
+  &lt;li&gt;&lt;ins&gt;Diverging definitions&lt;/ins&gt;: by far the most important, here. In this context, what exactly qualifies as a “prototype”?:
+    &lt;ol&gt;
+      &lt;li&gt;A series of command lines that you have to type to eventually display something and whose sole use if to make a point?&lt;/li&gt;
+      &lt;li&gt;A limping code that sort of works up to a certain point and then requires human intervention for any visualisation to occur?&lt;/li&gt;
+      &lt;li&gt;A functional package that looks ugly but does the job?&lt;/li&gt;
+    &lt;/ol&gt;
+
+    &lt;p&gt;Only one of those can indeed be put online without further development time. Well in my case I had something akin to the second definition: a code pipeline that -on my computer- could generate the data needed and embodied the essence of the idea and innovation. The software was not stable at all and sometimes needed multiple restarts to complete a single data transformation epoch. Plus, to produce something visual, it needed human intervention and partial curation of the output. Something like this still constitutes a “prototype” as it shows that the idea and technical approach are sound, but it cannot yet live a life of its own online.&lt;/p&gt;
+
+    &lt;p&gt;In retrospect, I think that what most people mean by “prototype” is “a facade that would attract attention”. Something, even if static, shows your point and that you can present to investors, or leverage to show interest and market potential. As far as 5-years-younger-me was concerned, this was not even a possibility.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So, was I wrong to not use this barebone creation? Probably. I invested efforts in it and nothing came out. Was it my fault? Totally.&lt;/p&gt;
+
+&lt;h2 id=&quot;about-refframe-more-particularly&quot;&gt;About Refframe, more particularly:&lt;/h2&gt;
+
+&lt;p&gt;Regardless of what happened, what I was left at the end of my few months of tickling looked something like this:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;em&gt;First, A forced based co-citation graph showing articles (in red), references (in blue - often radiating in a star-like pattern from the red articles), and academic references (in green - ULR links, book references, etc…).&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;This representation was generated through a graph library (I cannot remember which one, it was a long time ago. Apologies) and saved directly to PDF.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/refrmblog/assets/img/posts/your-first-prototype/reference_net_subset_scaled.png&quot; alt=&quot;reference_net_subset_scaled&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;em&gt;Next, a connectogram representation of the same information&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;based on a different dataset:&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/refrmblog/assets/img/posts/your-first-prototype/graph_circle_scaled.png&quot; alt=&quot;reference_net_subset_scaled&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;em&gt;Finally, a web UI used akin to the first image of the list here used to display a part of the bibliography of my PhD Thesis:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;The web UI was lightly interactive, in the sense that you could drag nodes and hover them to display the title of the document.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/refrmblog/assets/img/posts/your-first-prototype/AKMH_graph.png&quot; alt=&quot;reference_net_subset_scaled&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These graphs already displayed valuable information but were very hard to read, to use, and even harder (and slow) to generate. To be honest, the prototype itself was not too difficult to produce. The involved part(s) were to come later…We are still a long way away from what I timidly showcased in &lt;a href=&quot;https://illioren.github.io/refrmblog/refframe/journey/2020/09/28/what-is-refframe/&quot;&gt;My previous post&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In a later post, I will dig more into what it did and how it worked back then.&lt;/p&gt;</content><author><name>Tim</name></author><category term="[&quot;refframe&quot;, &quot;journey&quot;, &quot;first prototype&quot;]" /><summary type="html">Your first prototype</summary></entry><entry><title type="html">What is Refframe, concretely?</title><link href="https://illioren.github.io/refrmblog/refframe/journey/2020/09/28/what-is-refframe/" rel="alternate" type="text/html" title="What is Refframe, concretely?" /><published>2020-09-28T08:00:00+00:00</published><updated>2020-09-28T08:00:00+00:00</updated><id>https://illioren.github.io/refrmblog/refframe/journey/2020/09/28/what-is-refframe</id><content type="html" xml:base="https://illioren.github.io/refrmblog/refframe/journey/2020/09/28/what-is-refframe/">&lt;h3 id=&quot;i-am-building-a-search-engine&quot;&gt;I am building a search engine&lt;/h3&gt;
+
+&lt;p&gt;As I have explained in my &lt;a href=&quot;https://illioren.github.io/refrmblog/refframe/journey/2020/09/21/refframe-and-blogging/&quot;&gt;First post&lt;/a&gt; Refframe is a platform dedicated to the search of academic documents. However, I was eager to offer a different set of tools compared to other search engines &lt;strong&gt;❶&lt;/strong&gt;. Not because traditional tools do not work, but because they are not ill adapted: keyword-based search - coupled with page ranking - is sufficient for most common topics, but when it comes to research, some concepts can be specialised enough to require a full sentence (or more) to accurately characterise.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, we already invented the symbols that encode those thoughts: &lt;em&gt;peer-reviewed publications&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Peer-reviewed publications come with both the description and the relationships relative to a given topic. So why not use this to formulate a search term?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;❶&lt;/strong&gt; &lt;em&gt;Most search engines that enable screening of scientific content use a ‘keyword + filter’ approach (taken after web-search engines)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;i-am-building-a-graph-interface&quot;&gt;I am building a graph interface&lt;/h3&gt;
+
+&lt;p&gt;The idea of using scientific documents as search terms is at the root of the project. It, however, is only a single facet of an efficient document discovery system. More than formulating the search query, visualising the results should be done efficiently.&lt;/p&gt;
+
+&lt;p&gt;This aspect is often left aside and defaults to displaying a paginated list that the user is free to scroll up and down and walk back and forth. But let’s be honest here, whoever passes the first page of results? All but the first five entries are likely simply ignored.&lt;/p&gt;
+
+&lt;p&gt;But to better grasp the results provided, I wanted to stay away from a tradition list display (although, a list display will also exist, for familiarity’s sake).
+Graph visualisation enables to seize at a glance the relationship between multiple articles; being similarities, topics and sub subtopics, and other interesting resources.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/refrmblog/assets/img/posts/what-is-refframe/unfiltered_graph.png&quot; alt=&quot;imgs&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;i-am-building-an-exploration-engine&quot;&gt;I am building an exploration engine&lt;/h3&gt;
+
+&lt;p&gt;I find the term “search engine” to be misleading: it hints that it will help you look for something, but in fact, most of them just give you a list of results, without any sense of &lt;em&gt;why&lt;/em&gt; this result has been given. For hard facts lookup, it does not matter: if you are looking for the date of inauguration of a monument or the year humanity first made it to the moon, the factual results need not suffer any “why”s.&lt;/p&gt;
+
+&lt;p&gt;In the context of looking for “relevant” documents, though, it is another story altogether - especially when the document is 30 pages of involved content that will take you anywhere between a few hours to a few days to ingest and understand. I would also argue that, while doing research, we rarely look for “relevant” documents, but more for “&lt;strong&gt;&lt;em&gt;interesting material&lt;/em&gt;&lt;/strong&gt;” in a given field. And since &lt;em&gt;interest&lt;/em&gt; is a very subjective metric, just providing hard answers simply doesn’t cut it.&lt;/p&gt;
+
+&lt;p&gt;I have in mind that while the supposed results should be clearly presented on a dedicated page, they also should be interactive and enable a certain level of interaction - and exploration.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/refrmblog/assets/img/posts/what-is-refframe/filtered_graph.png&quot; alt=&quot;imgs&quot; /&gt;&lt;/p&gt;</content><author><name>Tim</name></author><category term="[&quot;refframe&quot;, &quot;journey&quot;]" /><summary type="html">I am building a search engine</summary></entry><entry><title type="html">Refframe and blogging</title><link href="https://illioren.github.io/refrmblog/refframe/journey/2020/09/21/refframe-and-blogging/" rel="alternate" type="text/html" title="Refframe and blogging" /><published>2020-09-21T07:00:00+00:00</published><updated>2020-09-21T07:00:00+00:00</updated><id>https://illioren.github.io/refrmblog/refframe/journey/2020/09/21/refframe-and-blogging</id><content type="html" xml:base="https://illioren.github.io/refrmblog/refframe/journey/2020/09/21/refframe-and-blogging/">&lt;h3 id=&quot;so-you-said-refframe&quot;&gt;So, you said Refframe?&lt;/h3&gt;
+&lt;p&gt;Long story short: &lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Refframe is an exploration platform meant to facilitate navigation through the cloud of scientific content.&lt;/code&gt;&lt;/strong&gt;
+The name is a contraction of Reference Frame and summarises the idea behind my project: utilising the references contained by scientific publications to better catalogue and frame them.&lt;/p&gt;
+&lt;h3 id=&quot;my-problem-and-the-idea&quot;&gt;My problem and the idea&lt;/h3&gt;
+&lt;p&gt;During my time in academia, I realised that while doing research, everybody was doing two things to find new scientific content to read:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Use one of the many search engines existing on the internet, enter a few keywords and look for interesting documents.&lt;/li&gt;
+  &lt;li&gt;Look within the references of an interesting article to find more relevant materials to read or relevant authors.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&quot;ok-and-whats-wrong-with-that&quot;&gt;Ok, and what’s wrong with that?&lt;/h5&gt;
+&lt;p&gt;Completing this process by hand is long, tedious and its outcome often incomplete. I thought that there might be a better way of doing things and minimise the burden placed on the human - which was me, back then. Why would not the search engine perform most of this heavy lifting and present me a report?&lt;/p&gt;
+
+&lt;p&gt;The traditional way of doing document search relies on lexical indexations and computing a document match score against the search query. While this approach works well for non-specialised material where nuances and specific contexts are often of little concern, it seems to fail to deliver satisfying answers in the context of scientific publications.&lt;/p&gt;
+
+&lt;p&gt;To all this, I would add the fact that for some reasons, we choose to store a wide portion of mankind’s knowledge in a non easily minable data format: PDF documents (I will come back to those in the near future…)&lt;/p&gt;
+
+&lt;h5 id=&quot;and-so&quot;&gt;And so?&lt;/h5&gt;
+&lt;p&gt;So I thought that I could put something together, make my life easier, and ideally open it to more people along the way. I had experience with programming and I liked solving problems, so why not give it a good wack and knock this one out of the way.&lt;/p&gt;
+
+&lt;p&gt;That was five years ago, and today it is still not - fully - solved. It was naive of me to think that it would be an “easy” thing to do, but while the journey has been much longer than anticipated, I have come to know what I do not know; and also actually learned a few things along the way.&lt;/p&gt;
+
+&lt;h3 id=&quot;this-blog&quot;&gt;This blog&lt;/h3&gt;
+&lt;p&gt;Lately, I have reached a point where I could make incremental additions to my system. I have also reached the point where I had to look back and wonder if it was still worth pushing forth. I reached the conclusion that:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Yes, I would still like to finish what I have started…&lt;/li&gt;
+  &lt;li&gt;…But I would like to share it with more people.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This is why I start today this blog: not for advertising, but to share my experience, et and more importantly, my failures. We too rarely keep those to ourselves and prevent others from learning from them.&lt;/p&gt;
+
+&lt;p&gt;It might not be the best way to share what I want but, 
+as usual, &lt;em&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;I have no idea what I am doing, but I am doing it anyway.&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;</content><author><name>Tim</name></author><category term="[&quot;refframe&quot;, &quot;journey&quot;]" /><summary type="html">So, you said Refframe? Long story short: Refframe is an exploration platform meant to facilitate navigation through the cloud of scientific content. The name is a contraction of Reference Frame and summarises the idea behind my project: utilising the references contained by scientific publications to better catalogue and frame them. My problem and the idea During my time in academia, I realised that while doing research, everybody was doing two things to find new scientific content to read:</summary></entry></feed>
